@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Portfolio">
+  <title>Olittle — research and art</title>
+
+  <style>
+    :root {
+      --bg: #10151b;
+      --surface: #18212b;
+      --text: #edf4f7;
+      --muted: #afbec7;
+      --accent: #8fe5d4;
+      --line: rgba(237, 244, 247, 0.14);
+      --max: 1060px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 92% 0%, rgba(75, 184, 195, 0.18), transparent 32rem),
+        radial-gradient(circle at 0% 25%, rgba(143, 229, 212, 0.10), transparent 29rem),
+        var(--bg);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .container {
+      width: min(calc(100% - 2rem), var(--max));
+      margin-inline: auto;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1.35rem 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .brand {
+      font-weight: 750;
+      letter-spacing: 0.02em;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: flex-end;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      font-size: 0.95rem;
+      text-decoration: none;
+    }
+
+    .nav-links a:hover,
+    .nav-links a:focus {
+      color: var(--accent);
+    }
+
+    .hero {
+      max-width: 800px;
+      padding: 7rem 0 5rem;
+    }
+
+    .eyebrow {
+      margin: 0 0 1rem;
+      color: var(--accent);
+      font-size: 0.84rem;
+      font-weight: 700;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(3rem, 8vw, 6.3rem);
+      line-height: 0.98;
+      letter-spacing: -0.06em;
+    }
+
+    .lead {
+      max-width: 680px;
+      margin: 2rem 0;
+      color: var(--muted);
+      font-size: clamp(1.05rem, 2vw, 1.25rem);
+    }
+
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 2rem;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 0.8rem 1.1rem;
+      border: 1px solid var(--accent);
+      border-radius: 0.55rem;
+      color: var(--bg);
+      background: var(--accent);
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .button.secondary {
+      border-color: var(--line);
+      color: var(--text);
+      background: transparent;
+    }
+
+    section {
+      padding: 4.5rem 0;
+      border-top: 1px solid var(--line);
+    }
+
+    h2 {
+      margin: 0 0 0.8rem;
+      font-size: clamp(1.9rem, 4vw, 2.8rem);
+      letter-spacing: -0.04em;
+    }
+
+    .intro {
+      max-width: 720px;
+      margin: 0 0 2rem;
+      color: var(--muted);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .card {
+      min-height: 215px;
+      padding: 1.4rem;
+      border: 1px solid var(--line);
+      border-radius: 0.85rem;
+      background: rgba(24, 33, 43, 0.72);
+    }
+
+    .card h3 {
+      margin: 0 0 0.8rem;
+      font-size: 1.15rem;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .tag {
+      display: inline-block;
+      margin: 1rem 0.3rem 0 0;
+      padding: 0.18rem 0.55rem;
+      border: 1px solid var(--line);
+      border-radius: 99px;
+      color: var(--accent);
+      font-size: 0.78rem;
+    }
+
+    .contact-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.9rem;
+      margin-top: 1.5rem;
+    }
+
+    .contact-links a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    footer {
+      padding: 2rem 0 3rem;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 720px) {
+      .nav {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .nav-links {
+        justify-content: flex-start;
+      }
+
+      .hero {
+        padding: 4.5rem 0 3.5rem;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="container">
+    <nav class="nav">
+      <a class="brand" href="#top">Olittle</a>
+
+      <div class="nav-links">
+        <a href="#science">Science</a>
+        <a href="#projects">Projects</a>
+        <a href="#art">Art</a>
+        <a href="#contact">Contacts</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="container hero">
+      <p class="eyebrow">Research · Art · Computation</p>
+
+      <h1>Olittle</h1>
+
+      <p class="lead">
+        Description will be here...
+      </p>
+
+      <div class="buttons">
+        <a class="button" href="#science">Research projects</a>
+        <a class="button secondary" href="#art">Art projects</a>
+      </div>
+    </section>
+
+    <section id="science">
+      <div class="container">
+        <h2>Research projects</h2>
+
+        <p class="intro">
+          Intro will be here...
+        </p>
+
+        <div class="grid">
+          <article class="card">
+            <h3>*Title1*</h3>
+            <p>
+              *Title2*
+            </p>
+            <span class="tag">Ptychography</span>
+            <span class="tag">CDI</span>
+            <span class="tag">Phase retrieval</span>
+          </article>
+
+          <article class="card">
+            <h3>*Title1*</h3>
+            <p>
+              *Title2*
+            </p>
+            <span class="tag">Wave propagation simulation</span>
+            <span class="tag">Synchrotron radiation techniques</span>
+          </article>
+
+          <article class="card">
+            <h3>*Title1*</h3>
+            <p>
+              *Title2*
+            </p>
+            <span class="tag">Python</span>
+            <span class="tag">Jupyter</span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="container">
+        <h2>Highlight</h2>
+
+        <p class="intro">
+          Descriptions
+        </p>
+
+        <div class="grid">
+
+          <article class="card">
+            <h3>*Title1*</h3>
+            <p>
+              *Title2*
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="art">
+      <div class="container">
+        <h2>Art</h2>
+
+        <p class="intro">
+          SciArt projects will be here...
+        </p>
+
+        <div class="grid">
+          <article class="card">
+            <h3>01</h3>
+            <p>Decrtiption</p>
+          </article>
+
+          <article class="card">
+            <h3>02</h3>
+            <p>Decription</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container">
+        <h2>Contact me</h2>
+
+        <p class="intro">
+          *Descripion*
+        </p>
+
+        <div class="contact-links">
+          <a href="mailto:YOUR_EMAIL@example.com">Email</a>
+          <a href="https://github.com/dorka63">GitHub</a>
+          <a href="https://orcid.org/">ORCID</a>
+          <a href="https://scholar.google.com/">Google Scholar</a>
+          <a href="https://t.me/YOUR_TELEGRAM">Telegram</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="container">
+    © 2026 Olittle
+  </footer>
+</body>
+</html>
