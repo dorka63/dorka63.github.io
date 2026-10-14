@@ -1,20 +1,33 @@
 <!doctype html>
-<html lang="ru">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Portfolio">
-  <title>Olittle — research and art</title>
+
+  <meta
+    name="description"
+    content="Olittle — personal archive of research, art and projects."
+  >
+
+  <meta name="theme-color" content="#111510">
+
+  <title>Olittle / Personal archive</title>
 
   <style>
     :root {
-      --bg: #10151b;
-      --surface: #18212b;
-      --text: #edf4f7;
-      --muted: #afbec7;
-      --accent: #8fe5d4;
-      --line: rgba(237, 244, 247, 0.14);
-      --max: 1060px;
+      color-scheme: dark;
+
+      --bg: #111510;
+      --panel: #161c14;
+      --fg: #c3d5a4;
+      --muted: #93a480;
+      --line: rgba(195, 213, 164, 0.28);
+      --faint: rgba(195, 213, 164, 0.07);
+
+      --width: 1240px;
+
+      --mono: "Courier New", Courier, monospace;
+      --sans: Arial, Helvetica, sans-serif;
     }
 
     * {
@@ -23,337 +36,951 @@
 
     html {
       scroll-behavior: smooth;
+      scroll-padding-top: 2rem;
     }
 
     body {
       margin: 0;
-      color: var(--text);
-      background:
-        radial-gradient(circle at 92% 0%, rgba(75, 184, 195, 0.18), transparent 32rem),
-        radial-gradient(circle at 0% 25%, rgba(143, 229, 212, 0.10), transparent 29rem),
-        var(--bg);
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
-        "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: var(--mono);
       line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    ::selection {
+      background: var(--fg);
+      color: var(--bg);
     }
 
     a {
       color: inherit;
     }
 
+    a:focus-visible {
+      outline: 2px solid var(--fg);
+      outline-offset: 6px;
+    }
+
+    button,
+    a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    h1,
+    h2,
+    h3,
+    p,
+    figure {
+      margin: 0;
+    }
+
     .container {
-      width: min(calc(100% - 2rem), var(--max));
+      width: min(calc(100% - 4rem), var(--width));
       margin-inline: auto;
     }
 
-    .nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      padding: 1.35rem 0;
+    .skip-link {
+      position: absolute;
+      top: -6rem;
+      left: 1rem;
+      z-index: 20;
+      padding: 0.75rem 1rem;
+      background: var(--fg);
+      color: var(--bg);
+    }
+
+    .skip-link:focus {
+      top: 1rem;
+    }
+
+    /* Navigation */
+
+    .site-header {
       border-bottom: 1px solid var(--line);
     }
 
-    .brand {
-      font-weight: 750;
-      letter-spacing: 0.02em;
-      text-decoration: none;
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      min-height: 84px;
     }
 
-    .nav-links {
+    .brand {
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .brand-mark {
+      margin-right: 0.5rem;
+      color: var(--muted);
+    }
+
+    .navigation {
       display: flex;
       flex-wrap: wrap;
-      gap: 1rem;
-      justify-content: flex-end;
+      gap: 0.6rem 1.5rem;
     }
 
-    .nav-links a {
+    .navigation a {
+      padding-block: 0.35rem;
       color: var(--muted);
-      font-size: 0.95rem;
+      font-size: 0.72rem;
       text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
     }
 
-    .nav-links a:hover,
-    .nav-links a:focus {
-      color: var(--accent);
+    .navigation a:hover,
+    .navigation a:focus-visible {
+      color: var(--fg);
+      text-decoration: underline;
+      text-underline-offset: 0.35rem;
     }
 
-    .hero {
-      max-width: 800px;
-      padding: 7rem 0 5rem;
-    }
+    /* Shared typography */
 
-    .eyebrow {
-      margin: 0 0 1rem;
-      color: var(--accent);
-      font-size: 0.84rem;
-      font-weight: 700;
-      letter-spacing: 0.13em;
+    .eyebrow,
+    .section-number,
+    .figure-caption,
+    .micro-label {
+      font-size: 0.68rem;
+      font-weight: 400;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
     }
 
-    h1 {
-      margin: 0;
-      font-size: clamp(3rem, 8vw, 6.3rem);
-      line-height: 0.98;
-      letter-spacing: -0.06em;
-    }
-
-    .lead {
-      max-width: 680px;
-      margin: 2rem 0;
+    .eyebrow,
+    .micro-label {
       color: var(--muted);
-      font-size: clamp(1.05rem, 2vw, 1.25rem);
     }
 
-    .buttons {
+    .section-heading {
+      font-family: var(--sans);
+      font-size: clamp(2rem, 4vw, 3.8rem);
+      font-weight: 400;
+      line-height: 1;
+      letter-spacing: -0.055em;
+    }
+
+    .subheading {
+      font-size: 0.8rem;
+      font-weight: 400;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+    }
+
+    .body-copy {
+      max-width: 62ch;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    /* First screen */
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: clamp(2rem, 6vw, 6rem);
+      padding-block: 5rem 4rem;
+    }
+
+    .hero-title {
+      margin-top: 1.8rem;
+      margin-left: -0.055em;
+      font-family: var(--sans);
+      font-size: clamp(4.4rem, 9vw, 8.6rem);
+      font-weight: 400;
+      line-height: 0.85;
+      letter-spacing: -0.075em;
+    }
+
+    .hero-rule {
+      width: 4rem;
+      height: 1px;
+      margin-block: 2.3rem;
+      background: var(--fg);
+    }
+
+    .info-block + .info-block {
+      margin-top: 2.5rem;
+    }
+
+    .info-block .subheading {
+      margin-bottom: 0.8rem;
+    }
+
+    .empty-copy {
+      min-height: 4rem;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .hero-figure {
+      min-width: 0;
+      align-self: start;
+    }
+
+    .signal-window {
+      position: relative;
+      display: grid;
+      place-items: center;
+      min-height: 390px;
+      aspect-ratio: 1 / 1;
+      overflow: hidden;
+      isolation: isolate;
+      border: 1px solid var(--line);
+      background: var(--bg);
+    }
+
+    .signal-window::before {
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background-image:
+        linear-gradient(var(--faint) 1px, transparent 1px),
+        linear-gradient(90deg, var(--faint) 1px, transparent 1px);
+      background-size: 32px 32px;
+      content: "";
+    }
+
+    .signal-window::after {
+      position: absolute;
+      inset: 0;
+      transform: translateY(-100%);
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(
+        transparent 85%,
+        rgba(195, 213, 164, 0.05)
+      );
+      pointer-events: none;
+      animation: scan 14s linear infinite;
+      content: "";
+    }
+
+    .signal-label {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      z-index: 2;
+      font-size: 0.62rem;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+    }
+
+    .signal-cross {
+      position: absolute;
+      right: 1rem;
+      bottom: 0.7rem;
+      font-size: 1.4rem;
+      font-weight: 400;
+    }
+
+    .ascii-object {
+      margin: 0;
+      color: var(--fg);
+      font-family: var(--mono);
+      font-size: clamp(0.43rem, 0.85vw, 0.76rem);
+      line-height: 1.15;
+      letter-spacing: 0;
+      white-space: pre;
+      user-select: none;
+      animation: float 12s ease-in-out infinite;
+    }
+
+    .figure-caption {
       display: flex;
-      flex-wrap: wrap;
-      gap: 0.75rem;
-      margin-top: 2rem;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-top: 0.75rem;
     }
 
-    .button {
-      display: inline-block;
-      padding: 0.8rem 1.1rem;
-      border: 1px solid var(--accent);
-      border-radius: 0.55rem;
-      color: var(--bg);
-      background: var(--accent);
-      font-weight: 700;
-      text-decoration: none;
+    .caption-detail {
+      color: var(--muted);
+      text-align: right;
     }
 
-    .button.secondary {
-      border-color: var(--line);
-      color: var(--text);
-      background: transparent;
-    }
+    /* Main sections */
 
-    section {
-      padding: 4.5rem 0;
+    .section {
+      padding-block: 3.5rem 4rem;
       border-top: 1px solid var(--line);
     }
 
-    h2 {
-      margin: 0 0 0.8rem;
-      font-size: clamp(1.9rem, 4vw, 2.8rem);
-      letter-spacing: -0.04em;
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
     }
 
-    .intro {
-      max-width: 720px;
-      margin: 0 0 2rem;
+    .section-number {
       color: var(--muted);
+      white-space: nowrap;
     }
 
-    .grid {
+    /* Research */
+
+    .research-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.5rem;
+    }
+
+    .research-figure {
+      min-width: 0;
+    }
+
+    .research-image {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      aspect-ratio: 4 / 3;
+      padding: 0.6rem;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: var(--bg);
+    }
+
+    .research-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    /* Art */
+
+    .art-topics {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 2rem;
+      padding-bottom: 3rem;
+    }
+
+    .topics-content {
+      min-height: 110px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .art-subsection {
+      padding-top: 2rem;
+      border-top: 1px solid var(--line);
+    }
+
+    .art-subsection + .art-subsection {
+      margin-top: 3rem;
+    }
+
+    .subsection-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
       gap: 1rem;
+      margin-bottom: 1.5rem;
     }
 
-    .card {
-      min-height: 215px;
-      padding: 1.4rem;
-      border: 1px solid var(--line);
-      border-radius: 0.85rem;
-      background: rgba(24, 33, 43, 0.72);
+    .recent-projects {
+      min-height: 100px;
     }
 
-    .card h3 {
-      margin: 0 0 0.8rem;
-      font-size: 1.15rem;
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.5rem;
     }
 
-    .card p {
-      margin: 0;
+    .gallery-slot {
+      min-width: 0;
+    }
+
+    .gallery-placeholder {
+      display: grid;
+      place-items: center;
+      aspect-ratio: 4 / 3;
+      border: 1px dashed var(--line);
+      background:
+        linear-gradient(
+          135deg,
+          transparent 49.8%,
+          var(--faint) 50%,
+          transparent 50.2%
+        );
+    }
+
+    .placeholder-mark {
       color: var(--muted);
+      font-size: 1.5rem;
+      font-weight: 400;
     }
 
-    .tag {
-      display: inline-block;
-      margin: 1rem 0.3rem 0 0;
-      padding: 0.18rem 0.55rem;
+    .gallery-slot figcaption {
+      min-height: 2rem;
+      padding-top: 0.75rem;
+      color: var(--muted);
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+    }
+
+    /* Styles for future linked artwork cards */
+
+    .project-card {
+      display: block;
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .project-visual {
+      position: relative;
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
       border: 1px solid var(--line);
-      border-radius: 99px;
-      color: var(--accent);
-      font-size: 0.78rem;
+      background: var(--bg);
+    }
+
+    .project-visual img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition:
+        opacity 450ms ease,
+        transform 650ms ease;
+    }
+
+    .project-ascii {
+      opacity: 1;
+    }
+
+    .project-photo {
+      opacity: 0;
+      transform: scale(1.035);
+    }
+
+    .project-card:hover .project-ascii,
+    .project-card:focus-visible .project-ascii {
+      opacity: 0;
+    }
+
+    .project-card:hover .project-photo,
+    .project-card:focus-visible .project-photo {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .project-title {
+      margin-top: 0.75rem;
+      font-size: 0.8rem;
+      font-weight: 400;
+    }
+
+    .project-meta {
+      margin-top: 0.2rem;
+      color: var(--muted);
+      font-size: 0.68rem;
+    }
+
+    /* Contact and footer */
+
+    .contact-layout {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 2rem;
     }
 
     .contact-links {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.9rem;
-      margin-top: 1.5rem;
+      gap: 1rem 2rem;
     }
 
     .contact-links a {
-      color: var(--accent);
-      text-decoration: none;
+      padding-block: 0.5rem;
+      font-size: 0.8rem;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 0.4rem;
     }
 
-    footer {
-      padding: 2rem 0 3rem;
+    .contact-links a:hover {
+      background: var(--fg);
+      color: var(--bg);
+    }
+
+    .site-footer {
+      padding-block: 1.5rem 2rem;
+      border-top: 1px solid var(--line);
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
       color: var(--muted);
-      font-size: 0.9rem;
+      font-size: 0.62rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
     }
 
-    @media (max-width: 720px) {
-      .nav {
-        align-items: flex-start;
-        flex-direction: column;
+    .footer-inner a {
+      text-underline-offset: 0.3rem;
+    }
+
+    /* Motion */
+
+    @keyframes scan {
+      from {
+        transform: translateY(-100%);
       }
 
-      .nav-links {
-        justify-content: flex-start;
+      to {
+        transform: translateY(100%);
+      }
+    }
+
+    @keyframes float {
+      0%,
+      100% {
+        transform: translateY(-5px);
+      }
+
+      50% {
+        transform: translateY(5px);
+      }
+    }
+
+    /* Responsive layout */
+
+    @media (max-width: 900px) {
+      .container {
+        width: min(calc(100% - 2.5rem), var(--width));
       }
 
       .hero {
-        padding: 4.5rem 0 3.5rem;
+        gap: 2rem;
+        padding-top: 3.5rem;
       }
 
-      .grid {
+      .signal-window {
+        min-height: 290px;
+      }
+
+      .research-grid,
+      .gallery-grid {
+        gap: 1rem;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .container {
+        width: calc(100% - 2rem);
+      }
+
+      .header-inner {
+        align-items: flex-start;
+        flex-direction: column;
+        justify-content: center;
+        gap: 1rem;
+        padding-block: 1.25rem;
+      }
+
+      .navigation {
+        gap: 0.4rem 1.1rem;
+      }
+
+      .hero {
         grid-template-columns: 1fr;
+        gap: 2.5rem;
+        padding-block: 3rem;
+      }
+
+      .hero-title {
+        font-size: clamp(4rem, 19vw, 7rem);
+      }
+
+      .signal-window {
+        min-height: 0;
+        aspect-ratio: 6 / 5;
+      }
+
+      .ascii-object {
+        font-size: clamp(0.48rem, 1.8vw, 0.75rem);
+      }
+
+      .section {
+        padding-block: 2.5rem 3rem;
+      }
+
+      .section-header {
+        margin-bottom: 2rem;
+      }
+
+      .research-grid,
+      .gallery-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .art-topics {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .topics-content {
+        min-height: 80px;
+      }
+    }
+
+    @media (hover: none) {
+      .project-photo {
+        opacity: 1;
+        transform: none;
+      }
+
+      .project-ascii {
+        opacity: 0;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      .ascii-object,
+      .signal-window::after {
+        animation: none;
+      }
+
+      .signal-window::after {
+        display: none;
+      }
+
+      .project-visual img {
+        transition: none;
       }
     }
   </style>
 </head>
 
 <body>
-  <header class="container">
-    <nav class="nav">
-      <a class="brand" href="#top">Anastasiia Murzina</a>
+  <a class="skip-link" href="#main">Skip to content</a>
 
-      <div class="nav-links">
-        <a href="#science">Science</a>
-        <a href="#projects">Projects</a>
+  <header class="site-header" id="top">
+    <div class="container header-inner">
+      <a class="brand" href="#top">
+        <span class="brand-mark" aria-hidden="true">[+]</span>
+        OLITTLE
+      </a>
+
+      <nav class="navigation" aria-label="Main navigation">
+        <a href="#research">Research</a>
+        <a href="#education">Education</a>
         <a href="#art">Art</a>
-        <a href="#contact">Contacts</a>
-      </div>
-    </nav>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
   </header>
 
-  <main id="top">
-    <section class="container hero">
-      <p class="eyebrow">μυαλό · mind</p>
+  <main id="main">
 
-      <h1>Anastasiia Murzina</h1>
+    <!-- INTRODUCTION -->
 
-      <p class="lead">
-        Description will be here...
-      </p>
+    <div class="container hero">
+      <div class="hero-text">
+        <p class="eyebrow">Personal archive / Research &amp; art</p>
 
-      <div class="buttons">
-        <a class="button" href="#science">Research projects</a>
-        <a class="button secondary" href="#art">Art projects</a>
+        <h1 class="hero-title">Olittle</h1>
+
+        <div class="hero-rule" aria-hidden="true"></div>
+
+        <section
+          class="info-block"
+          aria-labelledby="research-interests-title"
+        >
+          <h2
+            class="subheading"
+            id="research-interests-title"
+          >
+            Research interests
+          </h2>
+
+          <div class="empty-copy">
+            <!-- Add your research interests in English here:
+            <p class="body-copy">Your text.</p>
+            -->
+          </div>
+        </section>
+
+        <section
+          class="info-block"
+          id="education"
+          aria-labelledby="education-title"
+        >
+          <h2 class="subheading" id="education-title">
+            Education
+          </h2>
+
+          <div class="empty-copy">
+            <!-- Add your education in English here. -->
+          </div>
+        </section>
       </div>
-    </section>
 
-    <section id="science">
+      <!-- Temporary abstract graphic.
+           This can later be replaced with the supplied eye image. -->
+
+      <figure class="hero-figure">
+        <div class="signal-window">
+          <span class="signal-label" aria-hidden="true">
+            Visual study / 001
+          </span>
+
+          <pre class="ascii-object" aria-hidden="true">
+                       .
+                  .    :    .
+              .   :   .+.   :   .
+           .  :  .+. .:*:. .+.  :  .
+        .  : .+. :*: :*#*: :*: .+. :  .
+      . : .+.:*:.*#*.*#%#*.*#*.:*:.+. : .
+     .:.:*:.*#*:*#%#*#%@%#*#%#*:*#*.:*:.:.
+    .:*:*#*:#%#*#%@%#%@@@%#%@%#*#%#:*#*:.
+   .:*#*#%#*%@%#%@@@%@@@@@%@@@%#%@%*#%#*#*:.
+  .:*#%#%@%#@@@%@@@@@%@@@%@@@@@%@@@#%@%#%#*:.
+   .:*#*#%#*%@%#%@@@%@@@@@%@@@%#%@%*#%#*#*:.
+    .:*:*#*:#%#*#%@%#%@@@%#%@%#*#%#:*#*:.
+     .:.:*:.*#*:*#%#*#%@%#*#%#*:*#*.:*:.:.
+      . : .+.:*:.*#*.*#%#*.*#*.:*:.+. : .
+        .  : .+. :*: :*#*: :*: .+. :  .
+           .  :  .+. .:*:. .+.  :  .
+              .   :   .+.   :   .
+                  .    :    .
+                       .
+          </pre>
+
+          <span class="signal-cross" aria-hidden="true">+</span>
+        </div>
+
+        <figcaption class="figure-caption">
+          <span>FIG. 01</span>
+          <span class="caption-detail">Character study</span>
+        </figcaption>
+      </figure>
+    </div>
+
+    <!-- RESEARCH -->
+
+    <section
+      class="section"
+      id="research"
+      aria-labelledby="research-title"
+    >
       <div class="container">
-        <h2>Research projects</h2>
+        <header class="section-header">
+          <h2 class="section-heading" id="research-title">
+            Research
+          </h2>
 
-        <p class="intro">
-          Intro will be here...
-        </p>
+          <span class="section-number">01 / Visual index</span>
+        </header>
 
-        <div class="grid">
-          <article class="card">
-            <h3>*Title1*</h3>
-            <p>
-              *Title2*
-            </p>
-            <span class="tag">Ptychography</span>
-            <span class="tag">CDI</span>
-            <span class="tag">Phase retrieval</span>
-          </article>
+        <div class="research-grid">
+          <figure class="research-figure">
+            <div class="research-image">
+              <img
+                src="assets/research/research-02-ascii.webp"
+                alt="Scientific illustration rendered in ASCII characters, figure 2"
+                loading="lazy"
+                decoding="async"
+              >
+            </div>
 
-          <article class="card">
-            <h3>*Title1*</h3>
-            <p>
-              *Title2*
-            </p>
-            <span class="tag">Wave propagation simulation</span>
-            <span class="tag">Synchrotron radiation techniques</span>
-          </article>
+            <figcaption class="figure-caption">
+              <span>FIG. 02</span>
+            </figcaption>
+          </figure>
 
-          <article class="card">
-            <h3>*Title1*</h3>
-            <p>
-              *Title2*
-            </p>
-            <span class="tag">Python</span>
-            <span class="tag">Jupyter</span>
-          </article>
+          <figure class="research-figure">
+            <div class="research-image">
+              <img
+                src="assets/research/research-03-ascii.webp"
+                alt="Scientific illustration rendered in ASCII characters, figure 3"
+                loading="lazy"
+                decoding="async"
+              >
+            </div>
+
+            <figcaption class="figure-caption">
+              <span>FIG. 03</span>
+            </figcaption>
+          </figure>
+
+          <figure class="research-figure">
+            <div class="research-image">
+              <img
+                src="assets/research/research-04-ascii.webp"
+                alt="Scientific illustration rendered in ASCII characters, figure 4"
+                loading="lazy"
+                decoding="async"
+              >
+            </div>
+
+            <figcaption class="figure-caption">
+              <span>FIG. 04</span>
+            </figcaption>
+          </figure>
         </div>
       </div>
     </section>
 
-    <section id="projects">
+    <!-- ART -->
+
+    <section
+      class="section"
+      id="art"
+      aria-labelledby="art-title"
+    >
       <div class="container">
-        <h2>Highlight</h2>
+        <header class="section-header">
+          <h2 class="section-heading" id="art-title">
+            Art
+          </h2>
 
-        <p class="intro">
-          Descriptions
-        </p>
+          <span class="section-number">02 / Works &amp; studies</span>
+        </header>
 
-        <div class="grid">
+        <div class="art-topics">
+          <h3 class="subheading" id="topics-title">Topics</h3>
 
-          <article class="card">
-            <h3>*Title1*</h3>
-            <p>
-              *Title2*
-            </p>
-          </article>
+          <div class="topics-content" aria-labelledby="topics-title">
+            <!-- Add your art topics in English here:
+            <p class="body-copy">Your text.</p>
+            -->
+          </div>
         </div>
+
+        <section
+          class="art-subsection"
+          aria-labelledby="recent-projects-title"
+        >
+          <header class="subsection-header">
+            <h3 class="subheading" id="recent-projects-title">
+              Recent projects
+            </h3>
+          </header>
+
+          <div class="recent-projects">
+            <!-- Add recent project entries here. -->
+          </div>
+        </section>
+
+        <section
+          class="art-subsection"
+          aria-labelledby="gallery-title"
+        >
+          <header class="subsection-header">
+            <h3 class="subheading" id="gallery-title">
+              Gallery
+            </h3>
+
+            <span class="micro-label">Selected works</span>
+          </header>
+
+          <!-- Empty visual slots, not clickable project cards. -->
+
+          <div class="gallery-grid">
+            <figure class="gallery-slot">
+              <div class="gallery-placeholder" aria-hidden="true">
+                <span class="placeholder-mark">+</span>
+              </div>
+              <figcaption>WORK / 01</figcaption>
+            </figure>
+
+            <figure class="gallery-slot">
+              <div class="gallery-placeholder" aria-hidden="true">
+                <span class="placeholder-mark">+</span>
+              </div>
+              <figcaption>WORK / 02</figcaption>
+            </figure>
+
+            <figure class="gallery-slot">
+              <div class="gallery-placeholder" aria-hidden="true">
+                <span class="placeholder-mark">+</span>
+              </div>
+              <figcaption>WORK / 03</figcaption>
+            </figure>
+          </div>
+
+          <!--
+          Replace a gallery-slot with this structure when a work is ready:
+
+          <a class="project-card" href="projects/work-01.html">
+            <div class="project-visual">
+              <img
+                class="project-ascii"
+                src="assets/art/work-01-ascii.webp"
+                alt=""
+                loading="lazy"
+              >
+
+              <img
+                class="project-photo"
+                src="assets/art/work-01-cover.webp"
+                alt="Description of the finished artwork"
+                loading="lazy"
+              >
+            </div>
+
+            <h4 class="project-title">Project title</h4>
+            <p class="project-meta">Year / Medium</p>
+          </a>
+          -->
+        </section>
       </div>
     </section>
 
-    <section id="art">
-      <div class="container">
-        <h2>Art</h2>
+    <!-- CONTACT -->
 
-        <p class="intro">
-          SciArt projects will be here...
-        </p>
-
-        <div class="grid">
-          <article class="card">
-            <h3>01</h3>
-            <p>Decrtiption</p>
-          </article>
-
-          <article class="card">
-            <h3>02</h3>
-            <p>Decription</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section id="contact">
-      <div class="container">
-        <h2>Contact me</h2>
-
-        <p class="intro">
-          *Descripion*
-        </p>
+    <section
+      class="section"
+      id="contact"
+      aria-labelledby="contact-title"
+    >
+      <div class="container contact-layout">
+        <h2 class="section-heading" id="contact-title">
+          Contact
+        </h2>
 
         <div class="contact-links">
-          <a href="mailto:YOUR_EMAIL@example.com">Email</a>
-          <a href="https://github.com/dorka63">GitHub</a>
-          <a href="https://orcid.org/">ORCID</a>
-          <a href="https://scholar.google.com/">Google Scholar</a>
-          <a href="https://t.me/YOUR_TELEGRAM">Telegram</a>
+          <a href="https://github.com/dorka63">GitHub ↗</a>
+
+          <!-- Add only your real links, for example:
+          <a href="mailto:your-address@example.com">Email ↗</a>
+          <a href="https://t.me/your_username">Telegram ↗</a>
+          -->
         </div>
       </div>
     </section>
   </main>
 
-  <footer class="container">
-    © 2026 Olittle
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <span>© 2026 Olittle</span>
+      <span>Personal archive</span>
+      <a href="#top">Back to top ↑</a>
+    </div>
   </footer>
 </body>
 </html>
